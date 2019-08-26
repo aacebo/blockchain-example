@@ -1,0 +1,11 @@
+:host {
+  color: #fff;
+  border-radius: 3px;
+  padding: 5px 10px;
+  background-color: red;
+  text-transform: uppercase;
+
+  &.active {
+    background-color: green;
+  }
+}

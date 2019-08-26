@@ -1,0 +1,15 @@
+button {
+  margin: 5px;
+  text-transform: uppercase;
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

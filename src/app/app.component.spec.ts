@@ -1,31 +1,61 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule, MatCardModule, MatToolbarModule, MatSidenavModule } from '@angular/material';
+
 import { AppComponent } from './app.component';
+import { LineChartModule } from './features/line-chart';
+import { StatusChipModule } from './features/status-chip';
+import { TransactionService, TransactionServiceStub } from './resources/transaction';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let service: TransactionService;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
+      declarations: [AppComponent],
+      imports: [
+        NoopAnimationsModule,
+
+        MatButtonModule,
+        MatCardModule,
+        MatToolbarModule,
+        MatSidenavModule,
+
+        LineChartModule,
+        StatusChipModule
       ],
+      providers: [{
+        provide: TransactionService,
+        useClass: TransactionServiceStub
+      }]
     }).compileComponents();
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.debugElement.componentInstance;
+    service = TestBed.get<TransactionService>(TransactionService);
   });
 
-  it(`should have as title 'blockchain-example'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('blockchain-example');
+  it('should create the component', () => {
+    expect(component).toBeTruthy();
   });
 
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to blockchain-example!');
+  describe('subscribe', () => {
+    it('should subscribe', () => {
+      const spy = spyOn(service, 'subscribe');
+      component.subscribe();
+      expect(spy).toHaveBeenCalled();
+    });
+  });
+
+  describe('unsubscribe', () => {
+    it('should unsubscribe', () => {
+      const spy = spyOn(service, 'unsubscribe');
+      component.unsubscribe();
+      expect(spy).toHaveBeenCalled();
+    });
   });
 });

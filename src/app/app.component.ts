@@ -1,10 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+
+import { TransactionService } from './resources/transaction';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  title = 'blockchain-example';
+  constructor(readonly transactionService: TransactionService) { }
+
+  subscribe() {
+    this.transactionService.subscribe();
+  }
+
+  unsubscribe() {
+    this.transactionService.unsubscribe();
+  }
 }
